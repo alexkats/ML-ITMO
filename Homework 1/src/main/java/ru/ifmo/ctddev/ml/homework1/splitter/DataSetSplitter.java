@@ -15,7 +15,7 @@ public interface DataSetSplitter<E> {
 
     int getPartsQuantity();
 
-    List<E> getTrainingDataSet();
+    List<E> getTrainingDataSet(int partNumber);
 
-    List<E> getTestingDataSet();
+    List<E> getTestingDataSet(int partNumber);
 }
