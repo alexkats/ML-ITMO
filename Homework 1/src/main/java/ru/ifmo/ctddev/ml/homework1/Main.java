@@ -1,6 +1,6 @@
 package ru.ifmo.ctddev.ml.homework1;
 
-import ru.ifmo.ctddev.core.entities.TwoDimensionalPoint;
+import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
 
 /**
  * @author Alexey Katsman
