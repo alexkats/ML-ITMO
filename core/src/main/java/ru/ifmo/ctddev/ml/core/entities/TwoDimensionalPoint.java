@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.core.entities;
+package ru.ifmo.ctddev.ml.core.entities;
 
 import lombok.Getter;
 

@@ -10,6 +10,7 @@
 	<modules>
 		<module>Homework 1</module>
         <module>core</module>
+        <module>utils</module>
     </modules>
 	<packaging>pom</packaging>
 
