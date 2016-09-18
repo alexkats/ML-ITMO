@@ -29,11 +29,11 @@ public class KNNCaller {
     }
 
     public void getOptimalTrainingDataSet() {
-        splitter.getTrainingDataSet(0);
+        splitter.splitAndGetTrainingDataSet(0);
     }
 
     public void getOptimalTestingDataSet() {
-        splitter.getTestingDataSet(0);
+        splitter.splitAndGetTestingDataSet(0);
     }
 
     public List<DataSetEntity> getDataClassificationByAlgorithm(List<DataSetEntity> trainingDataSet, List<DataSetEntity> askingDataSet) {
