@@ -2,6 +2,7 @@ package ru.ifmo.ctddev.ml.homework1;
 
 import ru.ifmo.ctddev.ml.core.entities.DataSetDistance;
 import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
+import ru.ifmo.ctddev.ml.core.interfaces.FourFunction;
 import ru.ifmo.ctddev.ml.homework1.splitter.DataSetSplitter;
 
 import java.util.List;
@@ -19,10 +20,10 @@ public class KNNAlgorithm {
     private DataSetSplitter<DataSetEntity> splitter;
 
     private final BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter;
-    private final BiFunction<TwoDimensionalPoint, List<DataSetDistance>, Double> spatialTransformation; // from point and List of distances to mistake
+    private final FourFunction<TwoDimensionalPoint, List<DataSetDistance>, Integer, Integer, Double> spatialTransformation; // from point, List of distances, current distance in list number, chosen K to weight of current point
 
     public KNNAlgorithm(BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter,
-                        BiFunction<TwoDimensionalPoint, List<DataSetDistance>, Double> spatialTransformation) {
+                        FourFunction<TwoDimensionalPoint, List<DataSetDistance>, Integer, Integer, Double> spatialTransformation) {
         this.distanceCounter = distanceCounter;
         this.spatialTransformation = spatialTransformation;
     }
@@ -52,28 +53,29 @@ public class KNNAlgorithm {
                     .map(trainingSet -> new DataSetDistance(distanceCounter.apply(trainingSet.getFeature(), test.getFeature()), trainingSet.getEntityClass()))
                     .collect(Collectors.toList());
             distances.sort((o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
-            int[] classNumberMentions = initiateClassNumberMentions();
+            double[] classNumberMentions = initiateClassNumberMentions();
             for (int i = 0; i < nearestPointsNumber; i++) {
-                classNumberMentions[distances.get(i).getEntityClass()]++;
+                classNumberMentions[distances.get(i).getEntityClass()] += spatialTransformation.apply(test.getFeature(),
+                        distances, i, nearestPointsNumber);
             }
             int chosenClass = getChosenClass(classNumberMentions);
             if (chosenClass != test.getEntityClass()) {
-                mistakes += spatialTransformation.apply(test.getFeature(), distances);
+                mistakes++;
             }
         }
         return mistakes;
     }
 
-    private int[] initiateClassNumberMentions() {
-        int[] result = new int[CLASSES_NUMBER];
+    private double[] initiateClassNumberMentions() {
+        double[] result = new double[CLASSES_NUMBER];
         for (int i = 0; i < CLASSES_NUMBER; i++) {
-            result[i] = 0;
+            result[i] = 0.0;
         }
         return result;
     }
 
-    private int getChosenClass(int[] classNumbers) {
-        int maxNumber = -1;
+    private int getChosenClass(double[] classNumbers) {
+        double maxNumber = -1;
         int classNumber = -1;
         for (int i = 0; i < classNumbers.length; i++) {
             if (classNumbers[i] > maxNumber) {

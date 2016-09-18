@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class SpatialTransformations {
 
-    public static double simpleTransformation(TwoDimensionalPoint x, List<DataSetDistance> distances) {
+    public static double simpleTransformation(TwoDimensionalPoint x, List<DataSetDistance> distances, Integer indexInList, Integer nearestNeighborsCount) {
         return 1.0;
     }
 }
