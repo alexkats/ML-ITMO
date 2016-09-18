@@ -35,9 +35,10 @@ public class KNNAlgorithm {
         double minAverageMistakes = -1.0;
         for (int i = 0; i < FOLD_NUMBER; i++) {
             int sumMistakes = 0;
+            splitter.setPartsQuantity(i);
             for (int j = 0; j < i; j++) {
-                splitter.split(i);
-                sumMistakes += countMistakes(splitter.getTrainingDataSet(j), splitter.getTestingDataSet(j));
+                splitter.split(j);
+                sumMistakes += countMistakes(splitter.getTrainingDataSet(), splitter.getTestingDataSet());
             }
             double averageMistakes = (double) sumMistakes / (double) i;
             if (optimalK == -1 || averageMistakes < minAverageMistakes) {

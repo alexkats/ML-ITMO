@@ -1,6 +1,8 @@
 package ru.ifmo.ctddev.ml.homework1;
 
 import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
+import ru.ifmo.ctddev.ml.homework1.ui.UIException;
+import ru.ifmo.ctddev.ml.homework1.ui.UIStarter;
 
 /**
  * @author Alexey Katsman
@@ -12,5 +14,11 @@ public class Main {
         System.out.println("Test 2");
         TwoDimensionalPoint point = new TwoDimensionalPoint(1.0, 2.0);
         System.out.println(point.getX());
+
+        try {
+            UIStarter.start();
+        } catch (UIException e) {
+            e.printStackTrace();
+        }
     }
 }
