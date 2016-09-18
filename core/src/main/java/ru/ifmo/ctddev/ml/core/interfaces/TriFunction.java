@@ -1,8 +1,5 @@
 package ru.ifmo.ctddev.ml.core.interfaces;
 
-import java.util.Objects;
-import java.util.function.Function;
-
 /**
  * @author Maxim Slyusarenko
  * @since 18.09.16
