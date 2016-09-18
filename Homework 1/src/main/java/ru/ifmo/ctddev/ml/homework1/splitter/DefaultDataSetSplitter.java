@@ -38,4 +38,9 @@ public class DefaultDataSetSplitter<E> implements DataSetSplitter<E> {
     public List<E> getTestingDataSet(int partNumber) {
         return null;
     }
+
+    @Override
+    public List<E> getAllDataSet() {
+        return null;
+    }
 }

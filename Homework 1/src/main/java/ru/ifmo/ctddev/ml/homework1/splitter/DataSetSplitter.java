@@ -18,4 +18,6 @@ public interface DataSetSplitter<E> {
     List<E> getTrainingDataSet(int partNumber);
 
     List<E> getTestingDataSet(int partNumber);
+
+    List<E> getAllDataSet();
 }
