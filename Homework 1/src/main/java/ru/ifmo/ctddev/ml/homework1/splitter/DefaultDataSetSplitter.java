@@ -47,9 +47,9 @@ public class DefaultDataSetSplitter<E> implements DataSetSplitter<E> {
 
     @Override
     public void split(int partNumber) {
-        trainingDataSet = new ArrayList<>(dataSet.subList(0, partNumber * partsQuantity));
-        trainingDataSet.addAll(dataSet.subList((partNumber + 1) * partsQuantity, dataSet.size()));
-        testingDataSet = new ArrayList<>(dataSet.subList(partNumber * partsQuantity, (partNumber + 1) * partsQuantity));
+        testingDataSet = new ArrayList<>(dataSet.subList(0, partNumber * partsQuantity));
+        testingDataSet.addAll(dataSet.subList((partNumber + 1) * partsQuantity, dataSet.size()));
+        trainingDataSet = new ArrayList<>(dataSet.subList(partNumber * partsQuantity, (partNumber + 1) * partsQuantity));
     }
 
     @Override
