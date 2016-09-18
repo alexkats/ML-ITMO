@@ -2,7 +2,7 @@ package ru.ifmo.ctddev.ml.homework1;
 
 import ru.ifmo.ctddev.ml.core.entities.DataSetDistance;
 import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
-import ru.ifmo.ctddev.ml.core.interfaces.FourFunction;
+import ru.ifmo.ctddev.ml.core.interfaces.TriFunction;
 import ru.ifmo.ctddev.ml.homework1.splitter.DataSetSplitter;
 
 import java.util.List;
@@ -20,11 +20,11 @@ public class KNNAlgorithm {
 
     private final DataSetSplitter<DataSetEntity> splitter;
     private final BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter;
-    private final FourFunction<TwoDimensionalPoint, List<DataSetDistance>, Integer, Integer, Double> spatialTransformation; // from point, List of distances, current distance in list number, chosen K to weight of current point
+    private final TriFunction<List<DataSetDistance>, Integer, Integer, Double> spatialTransformation; // from List of distances, current distance in list number, chosen K to weight of current point
 
     public KNNAlgorithm(DataSetSplitter<DataSetEntity> splitter,
                         BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter,
-                        FourFunction<TwoDimensionalPoint, List<DataSetDistance>, Integer, Integer, Double> spatialTransformation) {
+                        TriFunction<List<DataSetDistance>, Integer, Integer, Double> spatialTransformation) {
         this.splitter = splitter;
         this.distanceCounter = distanceCounter;
         this.spatialTransformation = spatialTransformation;
@@ -55,8 +55,8 @@ public class KNNAlgorithm {
         distances.sort((o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
         double[] classNumberMentions = initiateClassNumberMentions();
         for (int i = 0; i < trainingDataSet.size(); i++) {
-            classNumberMentions[distances.get(i).getEntityClass()] += spatialTransformation.apply(point.getFeature(),
-                    distances, i, trainingDataSet.size());
+            classNumberMentions[distances.get(i).getEntityClass()] += spatialTransformation.apply(distances, i,
+                    trainingDataSet.size());
         }
         return getChosenClass(classNumberMentions);
     }

@@ -2,7 +2,7 @@ package ru.ifmo.ctddev.ml.homework1;
 
 import ru.ifmo.ctddev.ml.core.entities.DataSetDistance;
 import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
-import ru.ifmo.ctddev.ml.core.interfaces.FourFunction;
+import ru.ifmo.ctddev.ml.core.interfaces.TriFunction;
 import ru.ifmo.ctddev.ml.homework1.splitter.DataSetSplitter;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class KNNCaller {
     private final KNNAlgorithm algorithm;
 
     public KNNCaller(DataSetSplitter<DataSetEntity> splitter, BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter,
-                     FourFunction<TwoDimensionalPoint, List<DataSetDistance>, Integer, Integer, Double> spatialTransformation) {
+                     TriFunction<List<DataSetDistance>, Integer, Integer, Double> spatialTransformation) {
         this.splitter = splitter;
         this.algorithm = new KNNAlgorithm(splitter, distanceCounter, spatialTransformation);
     }
