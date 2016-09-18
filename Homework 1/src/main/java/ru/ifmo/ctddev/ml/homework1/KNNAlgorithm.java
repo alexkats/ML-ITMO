@@ -37,7 +37,7 @@ public class KNNAlgorithm {
             int sumMistakes = 0;
             for (int j = 0; j < i; j++) {
                 splitter.split(i);
-                sumMistakes += countMistakes(splitter.getTrainingDataSet(j), splitter.getTestingDataSet(j), i);
+                sumMistakes += countMistakes(splitter.getTrainingDataSet(j), splitter.getTestingDataSet(j));
             }
             double averageMistakes = (double) sumMistakes / (double) i;
             if (optimalK == -1 || averageMistakes < minAverageMistakes) {
@@ -48,19 +48,23 @@ public class KNNAlgorithm {
         return optimalK;
     }
 
-    private int countMistakes(List<DataSetEntity> trainingDataSet, List<DataSetEntity> testingDataSet, int nearestPointsNumber) {
+    public int getChosenPointClass(DataSetEntity point, List<DataSetEntity> trainingDataSet) {
+        List<DataSetDistance> distances = trainingDataSet.stream()
+                .map(trainingSet -> new DataSetDistance(distanceCounter.apply(trainingSet.getFeature(), point.getFeature()), trainingSet.getEntityClass()))
+                .collect(Collectors.toList());
+        distances.sort((o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
+        double[] classNumberMentions = initiateClassNumberMentions();
+        for (int i = 0; i < trainingDataSet.size(); i++) {
+            classNumberMentions[distances.get(i).getEntityClass()] += spatialTransformation.apply(point.getFeature(),
+                    distances, i, trainingDataSet.size());
+        }
+        return getChosenClass(classNumberMentions);
+    }
+
+    private int countMistakes(List<DataSetEntity> trainingDataSet, List<DataSetEntity> testingDataSet) {
         int mistakes = 0;
         for (DataSetEntity test : testingDataSet) {
-            List<DataSetDistance> distances = trainingDataSet.stream()
-                    .map(trainingSet -> new DataSetDistance(distanceCounter.apply(trainingSet.getFeature(), test.getFeature()), trainingSet.getEntityClass()))
-                    .collect(Collectors.toList());
-            distances.sort((o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
-            double[] classNumberMentions = initiateClassNumberMentions();
-            for (int i = 0; i < nearestPointsNumber; i++) {
-                classNumberMentions[distances.get(i).getEntityClass()] += spatialTransformation.apply(test.getFeature(),
-                        distances, i, nearestPointsNumber);
-            }
-            int chosenClass = getChosenClass(classNumberMentions);
+            int chosenClass = getChosenPointClass(test, trainingDataSet);
             if (chosenClass != test.getEntityClass()) {
                 mistakes++;
             }
