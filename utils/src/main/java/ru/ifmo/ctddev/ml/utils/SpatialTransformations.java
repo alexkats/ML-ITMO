@@ -36,7 +36,7 @@ public class SpatialTransformations {
     }
 
     public static double variableParzenRosenblattWindow(List<DataSetDistance> distances, Integer indexInList,
-                                                     Integer nearestNeighborsCount) {
+                                                        Integer nearestNeighborsCount) {
 
         double functionArg = distances.get(indexInList).getDistance() / distances.get(nearestNeighborsCount + 1).getDistance();
         if (Math.abs(functionArg) > 1.0) {

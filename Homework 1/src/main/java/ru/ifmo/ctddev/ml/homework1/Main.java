@@ -8,9 +8,9 @@ import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
  */
 
 public class Main {
-	public static void main(String[] args) {
-		System.out.println("Test 2");
-		TwoDimensionalPoint point = new TwoDimensionalPoint(1.0, 2.0);
-		System.out.println(point.getX());
-	}
+    public static void main(String[] args) {
+        System.out.println("Test 2");
+        TwoDimensionalPoint point = new TwoDimensionalPoint(1.0, 2.0);
+        System.out.println(point.getX());
+    }
 }

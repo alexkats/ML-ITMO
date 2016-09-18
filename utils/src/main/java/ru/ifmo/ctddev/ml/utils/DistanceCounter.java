@@ -13,6 +13,6 @@ public class DistanceCounter {
     }
 
     public static double countEuclidDistance(TwoDimensionalPoint first, TwoDimensionalPoint second) {
-        return  countMinkowskiDistance(first, second, 2);
+        return countMinkowskiDistance(first, second, 2);
     }
 }
