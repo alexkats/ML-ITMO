@@ -17,13 +17,15 @@ public class KNNAlgorithm {
 
     private static final int FOLD_NUMBER = 10;
     private static final int CLASSES_NUMBER = 2;
-    private DataSetSplitter<DataSetEntity> splitter;
 
+    private final DataSetSplitter<DataSetEntity> splitter;
     private final BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter;
     private final FourFunction<TwoDimensionalPoint, List<DataSetDistance>, Integer, Integer, Double> spatialTransformation; // from point, List of distances, current distance in list number, chosen K to weight of current point
 
-    public KNNAlgorithm(BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter,
+    public KNNAlgorithm(DataSetSplitter<DataSetEntity> splitter,
+                        BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter,
                         FourFunction<TwoDimensionalPoint, List<DataSetDistance>, Integer, Integer, Double> spatialTransformation) {
+        this.splitter = splitter;
         this.distanceCounter = distanceCounter;
         this.spatialTransformation = spatialTransformation;
     }
