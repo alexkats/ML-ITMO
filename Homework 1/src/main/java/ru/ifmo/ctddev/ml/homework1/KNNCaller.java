@@ -25,15 +25,16 @@ public class KNNCaller {
     }
 
     public void splitToOptimalTrainingTestingDataSets() {
-        splitter.split(algorithm.getOptimalK());
+        splitter.setPartsQuantity(algorithm.getOptimalK());
+        splitter.split(0);
     }
 
-    public void getOptimalTrainingDataSet() {
-        splitter.splitAndGetTrainingDataSet(0);
+    public List<DataSetEntity> getOptimalTrainingDataSet() {
+        return splitter.getTrainingDataSet();
     }
 
-    public void getOptimalTestingDataSet() {
-        splitter.splitAndGetTestingDataSet(0);
+    public List<DataSetEntity> getOptimalTestingDataSet() {
+        return splitter.getTestingDataSet();
     }
 
     public List<DataSetEntity> getDataClassificationByAlgorithm(List<DataSetEntity> trainingDataSet, List<DataSetEntity> askingDataSet) {
