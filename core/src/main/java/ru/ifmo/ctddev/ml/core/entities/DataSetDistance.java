@@ -1,11 +1,11 @@
-package ru.ifmo.ctddev.ml.homework1;
+package ru.ifmo.ctddev.ml.core.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
  * @author Maxim Slyusarenko
- * @since 17.09.16
+ * @since 18.09.16
  */
 @AllArgsConstructor
 @Getter
