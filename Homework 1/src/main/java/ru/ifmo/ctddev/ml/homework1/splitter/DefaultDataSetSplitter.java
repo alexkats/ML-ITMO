@@ -1,7 +1,6 @@
 package ru.ifmo.ctddev.ml.homework1.splitter;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,6 @@ public class DefaultDataSetSplitter<E> implements DataSetSplitter<E> {
 
     private final List<E> dataSet;
     private int partSize;
-    @Setter
     private int partsQuantity;
     private List<E> trainingDataSet;
     private List<E> testingDataSet;
@@ -37,6 +35,12 @@ public class DefaultDataSetSplitter<E> implements DataSetSplitter<E> {
 
     public DefaultDataSetSplitter(List<E> dataSet, int partsQuantity, boolean createInstance) {
         this.dataSet = createInstance ? new ArrayList<>(dataSet) : dataSet;
+        this.partsQuantity = partsQuantity;
+        partSize = dataSet.size() / partsQuantity;
+    }
+
+    @Override
+    public void setPartsQuantity(int partsQuantity) {
         this.partsQuantity = partsQuantity;
         partSize = dataSet.size() / partsQuantity;
     }
