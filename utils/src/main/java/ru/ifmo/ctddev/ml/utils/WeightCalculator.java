@@ -9,7 +9,7 @@ import java.util.function.Function;
  * @author Maxim Slyusarenko
  * @since 18.09.16
  */
-public class SpatialTransformations {
+public class WeightCalculator {
 
     private static final int POWER = 5;
     private static final Function<Double, Double> KERNEL_FUNCTION = aDouble -> 3 * aDouble * aDouble / 2;

@@ -6,7 +6,7 @@ import ru.ifmo.ctddev.ml.homework1.splitter.DefaultDataSetSplitter;
 import ru.ifmo.ctddev.ml.homework1.ui.UIException;
 import ru.ifmo.ctddev.ml.homework1.ui.UIStarter;
 import ru.ifmo.ctddev.ml.utils.DistanceCounter;
-import ru.ifmo.ctddev.ml.utils.SpatialTransformations;
+import ru.ifmo.ctddev.ml.utils.WeightCalculator;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -29,7 +29,7 @@ public class Main {
         constructDataSet();
         Collections.shuffle(dataSet);
         DataSetSplitter<DataSetEntity> splitter = new DefaultDataSetSplitter<DataSetEntity>(dataSet, true);
-        KNNCaller knnCaller = new KNNCaller(splitter, DistanceCounter::countEuclidDistance, SpatialTransformations::powerTransformation);
+        KNNCaller knnCaller = new KNNCaller(splitter, DistanceCounter::countEuclidDistance, WeightCalculator::powerTransformation);
         knnCaller.splitToOptimalTrainingTestingDataSets();
 
         try {
