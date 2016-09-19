@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Alexey Katsman
@@ -28,8 +29,11 @@ public class Main {
         Collections.shuffle(dataSet);
         KFoldValidation validation = new KFoldValidation(dataSet, DistanceCounter::countEuclidDistance, WeightCalculator::variableParzenRosenblattWindow);
 
+        KNNAlgorithm algorithm = validation.getBestTrainedAlgorithm();
+        List<DataSetEntity> algorithmResult = algorithm.solve(dataSet);
         try {
-            UIStarter.start(dataSet, validation.getBestTrainedAlgorithm().solve(dataSet));
+            UIStarter.start(dataSet, algorithmResult);
+            System.out.printf(Locale.ENGLISH, "Accuracy: %.2f%%\n", validation.getQuality(dataSet, algorithmResult) * 100.0d);
         } catch (UIException e) {
             e.printStackTrace();
         }

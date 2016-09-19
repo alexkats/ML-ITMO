@@ -52,7 +52,7 @@ public class KFoldValidation {
         return perfectAlgorithm;
     }
 
-    private double getQuality(List<DataSetEntity> expected, List<DataSetEntity> actual) {
+    public double getQuality(List<DataSetEntity> expected, List<DataSetEntity> actual) {
         int mistakes = 0;
 
         for (int i = 0; i < expected.size(); i++) {
