@@ -6,6 +6,7 @@ import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
  * @author Maxim Slyusarenko
  * @since 17.09.16
  */
+@SuppressWarnings("unused")
 public class DistanceCounter {
 
     public static double countMinkowskiDistance(TwoDimensionalPoint first, TwoDimensionalPoint second, int p) {

@@ -9,6 +9,7 @@ import java.util.function.Function;
  * @author Maxim Slyusarenko
  * @since 18.09.16
  */
+@SuppressWarnings("unused")
 public class WeightCalculator {
 
     private static final int POWER = 5;
