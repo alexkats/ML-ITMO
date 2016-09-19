@@ -1,8 +1,17 @@
 package ru.ifmo.ctddev.ml.homework1.ui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Arrays;
+import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
+import ru.ifmo.ctddev.ml.homework1.DataSetEntity;
+
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.util.List;
 
 /**
@@ -13,38 +22,111 @@ import java.util.List;
 public class UIStarter {
 
     private static boolean initialized = false;
-    private final boolean success;
+    private final List<DataSetEntity> dataSet;
+    private boolean success;
     private JFrame mainWindow;
+    private JPanel cards;
 
-    private UIStarter() {
-        init();
-        success = true;
+    private UIStarter(List<DataSetEntity> dataSet) {
+        this.dataSet = dataSet;
+
+        SwingUtilities.invokeLater(() -> {
+            init();
+            success = true;
+        });
     }
 
     private void init() {
+        createAndConfigureMainWindow();
+        addComboBox();
+        addCardLayout();
+        showMainWindow();
+    }
+
+    private void createAndConfigureMainWindow() {
         mainWindow = new JFrame();
-        mainWindow.setMinimumSize(new Dimension(600, 600));
         mainWindow.setPreferredSize(new Dimension(600, 600));
-        addSpinner();
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void addComboBox() {
+        JComboBox<String> comboBox = new JComboBox<>(ComboBoxOptions.getStringOptions());
+
+        comboBox.addItemListener(itemEvent -> {
+            CardLayout cardLayout = (CardLayout) cards.getLayout();
+            cardLayout.show(cards, (String) itemEvent.getItem());
+        });
+
+        mainWindow.getContentPane().add(comboBox, BorderLayout.PAGE_START);
+    }
+
+    private void addCardLayout() {
+        cards = new JPanel(new CardLayout());
+        cards.add(new ChartPanel1(), ComboBoxOptions.INITIAL.getName());
+        cards.add(new ChartPanel2(), ComboBoxOptions.PREDICTED.getName());
+        mainWindow.getContentPane().add(cards, BorderLayout.CENTER);
+    }
+
+    private TwoDimensionalPoint calcucatePoint(DataSetEntity entity, double width, double height) {
+        TwoDimensionalPoint point = entity.getFeature();
+        width -= 20.0d;
+        height -= 20.0d;
+        return new TwoDimensionalPoint(width * (point.getX() + 1.0d) / 2.0d, height * (point.getY() + 1.0d) / 2.0d);
+    }
+
+    private void showMainWindow() {
+        mainWindow.pack();
+        mainWindow.setLocationByPlatform(true);
         mainWindow.setVisible(true);
     }
 
-    private void addSpinner() {
-        List<String> options = Arrays.asList("Initial Data Set", "Predicted Data Set");
-        JSpinner spinner = new JSpinner(new SpinnerListModel(options));
-        mainWindow.add(spinner);
-    }
-
-    private void addTwoLayers() {
-
-    }
-
-    public static void start() throws UIException {
+    public static void start(List<DataSetEntity> dataSet) throws UIException {
         if (initialized) {
             throw new UIException("Already opened");
         }
 
-        UIStarter starter = new UIStarter();
+        UIStarter starter = new UIStarter(dataSet);
         initialized = starter.success;
+    }
+
+    private class ChartPanel1 extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.clearRect(0, 0, getWidth(), getHeight());
+
+            dataSet.forEach(entity -> {
+                TwoDimensionalPoint pointInChart = calcucatePoint(entity, getWidth(), getHeight());
+                g.setColor(entity.getEntityClass() == 0 ? Color.RED : Color.GREEN);
+                g.fillOval((int) Math.round(pointInChart.getX()), (int) Math.round(pointInChart.getY()), 10, 10);
+            });
+        }
+    }
+
+    private class ChartPanel2 extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.clearRect(0, 0, getWidth(), getHeight());
+        }
+    }
+
+    private enum ComboBoxOptions {
+        INITIAL("Initial Data Set"),
+        PREDICTED("Predicted Data Set");
+
+        String option;
+
+        ComboBoxOptions(String option) {
+            this.option = option;
+        }
+
+        public String getName() {
+            return option;
+        }
+
+        public static String[] getStringOptions() {
+            return new String[]{INITIAL.getName(), PREDICTED.getName()};
+        }
     }
 }
