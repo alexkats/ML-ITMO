@@ -16,38 +16,16 @@ import java.util.stream.Collectors;
  */
 public class KNNAlgorithm {
 
-    private static final int FOLD_NUMBER = 10;
     private static final int CLASSES_NUMBER = 2;
+    private static final int NEIGHBORS_NUMBER = 3;
 
-    private final DataSetSplitter<DataSetEntity> splitter;
     private final BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter;
-    private final TriFunction<List<DataSetDistance>, Integer, Integer, Double> spatialTransformation; // from List of distances, current distance in list number, chosen K to weight of current point
+    private final TriFunction<List<DataSetDistance>, Integer, Integer, Double> weightCalculator; // from List of distances, current distance in list number, chosen K to weight of current point
 
-    public KNNAlgorithm(DataSetSplitter<DataSetEntity> splitter,
-                        BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter,
-                        TriFunction<List<DataSetDistance>, Integer, Integer, Double> spatialTransformation) {
-        this.splitter = splitter;
+    public KNNAlgorithm(BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter,
+                        TriFunction<List<DataSetDistance>, Integer, Integer, Double> weightCalculator) {
         this.distanceCounter = distanceCounter;
-        this.spatialTransformation = spatialTransformation;
-    }
-
-    public int getOptimalK() {
-        int optimalK = -1;
-        double minAverageMistakes = -1.0;
-        for (int i = 0; i < FOLD_NUMBER; i++) {
-            int sumMistakes = 0;
-            splitter.setPartsQuantity(i);
-            for (int j = 0; j < i + 1; j++) {
-                splitter.split(j);
-                sumMistakes += countMistakes(splitter.getTrainingDataSet(), splitter.getTestingDataSet());
-            }
-            double averageMistakes = (double) sumMistakes / (double) (i + 1);
-            if (optimalK == -1 || MathUtils.isLess(averageMistakes, minAverageMistakes)) {
-                optimalK = i;
-                minAverageMistakes = averageMistakes;
-            }
-        }
-        return optimalK;
+        this.weightCalculator = weightCalculator;
     }
 
     public int getChosenPointClass(DataSetEntity point, List<DataSetEntity> trainingDataSet) {
@@ -57,21 +35,10 @@ public class KNNAlgorithm {
         distances.sort((o1, o2) -> MathUtils.compare(o1.getDistance(), o2.getDistance()));
         double[] classNumberMentions = initiateClassNumberMentions();
         for (int i = 0; i < trainingDataSet.size(); i++) {
-            classNumberMentions[distances.get(i).getEntityClass()] += spatialTransformation.apply(distances, i,
-                    trainingDataSet.size());
+            classNumberMentions[distances.get(i).getEntityClass()] += weightCalculator.apply(distances, i,
+                    NEIGHBORS_NUMBER);
         }
         return getChosenClass(classNumberMentions);
-    }
-
-    private int countMistakes(List<DataSetEntity> trainingDataSet, List<DataSetEntity> testingDataSet) {
-        int mistakes = 0;
-        for (DataSetEntity test : testingDataSet) {
-            int chosenClass = getChosenPointClass(test, trainingDataSet);
-            if (chosenClass != test.getEntityClass()) {
-                mistakes++;
-            }
-        }
-        return mistakes;
     }
 
     private double[] initiateClassNumberMentions() {

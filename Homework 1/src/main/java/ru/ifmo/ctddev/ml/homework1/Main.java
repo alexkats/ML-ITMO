@@ -28,7 +28,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         constructDataSet();
         Collections.shuffle(dataSet);
-        DataSetSplitter<DataSetEntity> splitter = new DefaultDataSetSplitter<DataSetEntity>(dataSet, true);
+        DataSetSplitter<DataSetEntity> splitter = new DefaultDataSetSplitter<>(dataSet, true);
         KNNCaller knnCaller = new KNNCaller(splitter, DistanceCounter::countEuclidDistance, WeightCalculator::powerTransformation);
         knnCaller.splitToOptimalTrainingTestingDataSets();
 
