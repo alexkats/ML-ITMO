@@ -6,6 +6,7 @@ import ru.ifmo.ctddev.ml.core.interfaces.TriFunction;
 import ru.ifmo.ctddev.ml.homework1.splitter.DataSetSplitter;
 import ru.ifmo.ctddev.ml.utils.MathUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
@@ -21,14 +22,22 @@ public class KNNAlgorithm {
 
     private final BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter;
     private final TriFunction<List<DataSetDistance>, Integer, Integer, Double> weightCalculator; // from List of distances, current distance in list number, chosen K to weight of current point
+    private final List<DataSetEntity> trainingDataSet;
 
     public KNNAlgorithm(BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter,
-                        TriFunction<List<DataSetDistance>, Integer, Integer, Double> weightCalculator) {
+                        TriFunction<List<DataSetDistance>, Integer, Integer, Double> weightCalculator,
+                        List<DataSetEntity> trainingDataSet) {
         this.distanceCounter = distanceCounter;
         this.weightCalculator = weightCalculator;
+        this.trainingDataSet = trainingDataSet;
     }
 
-    public int getChosenPointClass(DataSetEntity point, List<DataSetEntity> trainingDataSet) {
+    public List<DataSetEntity> solve(List<DataSetEntity> askingDataSet) {
+        return askingDataSet.stream().map(entity -> new DataSetEntity(entity.getFeature(), getChosenPointClass(entity)))
+                .collect(Collectors.toList());
+    }
+
+    private int getChosenPointClass(DataSetEntity point) {
         List<DataSetDistance> distances = trainingDataSet.stream()
                 .map(trainingSet -> new DataSetDistance(distanceCounter.apply(trainingSet.getFeature(), point.getFeature()), trainingSet.getEntityClass()))
                 .collect(Collectors.toList());
