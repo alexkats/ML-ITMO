@@ -30,7 +30,7 @@ public class KFoldValidation {
         this.weightCalculator = weightCalculator;
     }
 
-    public KNNAlgorithm getBestTrainedAlgorithm(List<DataSetEntity> fullDataSet) {
+    public KNNAlgorithm getBestTrainedAlgorithm() {
         double maxQuality = -1.0;
         KNNAlgorithm perfectAlgorithm = null;
         splitter.setPartsQuantity(FOLD_NUMBER);

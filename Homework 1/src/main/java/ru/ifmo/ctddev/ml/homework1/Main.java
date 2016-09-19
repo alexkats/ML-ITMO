@@ -29,7 +29,7 @@ public class Main {
         KFoldValidation validation = new KFoldValidation(dataSet, DistanceCounter::countEuclidDistance, WeightCalculator::variableParzenRosenblattWindow);
 
         try {
-            UIStarter.start(dataSet, validation.getBestTrainedAlgorithm(dataSet).solve(dataSet));
+            UIStarter.start(dataSet, validation.getBestTrainedAlgorithm().solve(dataSet));
         } catch (UIException e) {
             e.printStackTrace();
         }
