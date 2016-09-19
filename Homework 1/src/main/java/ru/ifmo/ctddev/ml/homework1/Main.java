@@ -1,8 +1,6 @@
 package ru.ifmo.ctddev.ml.homework1;
 
 import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
-import ru.ifmo.ctddev.ml.homework1.splitter.DataSetSplitter;
-import ru.ifmo.ctddev.ml.homework1.splitter.DefaultDataSetSplitter;
 import ru.ifmo.ctddev.ml.homework1.ui.UIException;
 import ru.ifmo.ctddev.ml.homework1.ui.UIStarter;
 import ru.ifmo.ctddev.ml.utils.DistanceCounter;
@@ -28,12 +26,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
         constructDataSet();
         Collections.shuffle(dataSet);
-        DataSetSplitter<DataSetEntity> splitter = new DefaultDataSetSplitter<>(dataSet, true);
-        KNNCaller knnCaller = new KNNCaller(splitter, DistanceCounter::countEuclidDistance, WeightCalculator::powerTransformation);
-        knnCaller.splitToOptimalTrainingTestingDataSets();
+        KFoldValidation validation = new KFoldValidation(dataSet, DistanceCounter::countEuclidDistance, WeightCalculator::variableParzenRosenblattWindow);
 
         try {
-            UIStarter.start(dataSet, knnCaller.getDataClassificationByAlgorithm(knnCaller.getOptimalTrainingDataSet(), knnCaller.getOptimalTestingDataSet()));
+            UIStarter.start(dataSet, validation.getBestTrainedAlgorithm(dataSet).solve(dataSet));
         } catch (UIException e) {
             e.printStackTrace();
         }

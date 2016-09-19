@@ -33,6 +33,8 @@ public class KFoldValidation {
     public KNNAlgorithm getBestTrainedAlgorithm(List<DataSetEntity> fullDataSet) {
         double maxQuality = -1.0;
         KNNAlgorithm perfectAlgorithm = null;
+        splitter.setPartsQuantity(FOLD_NUMBER);
+
         for (int i = 0; i < FOLD_NUMBER; i++) {
             splitter.split(i);
             List<DataSetEntity> trainingDataSet = splitter.getTrainingDataSet();
@@ -40,21 +42,25 @@ public class KFoldValidation {
             KNNAlgorithm algorithm = new KNNAlgorithm(distanceCounter, weightCalculator, trainingDataSet);
             List<DataSetEntity> algorithmResult = algorithm.solve(testingDataSet);
             double quality = getQuality(testingDataSet, algorithmResult);
-            if (MathUtils.isLess(quality, maxQuality)) {
+
+            if (MathUtils.isGreater(quality, maxQuality)) {
                 maxQuality = quality;
                 perfectAlgorithm = algorithm;
             }
         }
+
         return perfectAlgorithm;
     }
 
     private double getQuality(List<DataSetEntity> expected, List<DataSetEntity> actual) {
         int mistakes = 0;
+
         for (int i = 0; i < expected.size(); i++) {
             if (expected.get(i).getEntityClass() != actual.get(i).getEntityClass()) {
                 mistakes++;
             }
         }
+
         return 1.0 - (double) mistakes / (double) expected.size();
     }
 }
