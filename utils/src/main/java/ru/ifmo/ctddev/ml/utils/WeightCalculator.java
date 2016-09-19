@@ -28,7 +28,7 @@ public class WeightCalculator {
     public static double fixedParzenRosenblattWindow(List<DataSetDistance> distances, Integer indexInList,
                                                      Integer nearestNeighborsCount) {
         double functionArg = distances.get(indexInList).getDistance() / H;
-        if (Math.abs(functionArg) > 1.0) {
+        if (MathUtils.isGreater(Math.abs(functionArg), 1.0d)) {
             return 0;
         } else {
             return KERNEL_FUNCTION.apply(functionArg);
@@ -39,7 +39,7 @@ public class WeightCalculator {
                                                         Integer nearestNeighborsCount) {
 
         double functionArg = distances.get(indexInList).getDistance() / distances.get(nearestNeighborsCount + 1).getDistance();
-        if (Math.abs(functionArg) > 1.0) {
+        if (MathUtils.isGreater(Math.abs(functionArg), 1.0d)) {
             return 0;
         } else {
             return KERNEL_FUNCTION.apply(functionArg);

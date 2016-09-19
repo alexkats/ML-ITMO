@@ -4,6 +4,7 @@ import ru.ifmo.ctddev.ml.core.entities.DataSetDistance;
 import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
 import ru.ifmo.ctddev.ml.core.interfaces.TriFunction;
 import ru.ifmo.ctddev.ml.homework1.splitter.DataSetSplitter;
+import ru.ifmo.ctddev.ml.utils.MathUtils;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -41,7 +42,7 @@ public class KNNAlgorithm {
                 sumMistakes += countMistakes(splitter.getTrainingDataSet(), splitter.getTestingDataSet());
             }
             double averageMistakes = (double) sumMistakes / (double) (i + 1);
-            if (optimalK == -1 || averageMistakes < minAverageMistakes) {
+            if (optimalK == -1 || MathUtils.isLess(averageMistakes, minAverageMistakes)) {
                 optimalK = i;
                 minAverageMistakes = averageMistakes;
             }
@@ -53,7 +54,7 @@ public class KNNAlgorithm {
         List<DataSetDistance> distances = trainingDataSet.stream()
                 .map(trainingSet -> new DataSetDistance(distanceCounter.apply(trainingSet.getFeature(), point.getFeature()), trainingSet.getEntityClass()))
                 .collect(Collectors.toList());
-        distances.sort((o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
+        distances.sort((o1, o2) -> MathUtils.compare(o1.getDistance(), o2.getDistance()));
         double[] classNumberMentions = initiateClassNumberMentions();
         for (int i = 0; i < trainingDataSet.size(); i++) {
             classNumberMentions[distances.get(i).getEntityClass()] += spatialTransformation.apply(distances, i,
@@ -85,7 +86,7 @@ public class KNNAlgorithm {
         double maxNumber = -1;
         int classNumber = -1;
         for (int i = 0; i < classNumbers.length; i++) {
-            if (classNumbers[i] > maxNumber) {
+            if (MathUtils.isGreater(classNumbers[i], maxNumber)) {
                 classNumber = i;
                 maxNumber = classNumbers[i];
             }
