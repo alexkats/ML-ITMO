@@ -41,8 +41,8 @@ public class DefaultDataSetSplitter<E> implements DataSetSplitter<E> {
 
     @Override
     public void setPartsQuantity(int partsQuantity) {
-        this.partsQuantity = partsQuantity;
-        partSize = dataSet.size() / partsQuantity;
+        this.partsQuantity = partsQuantity + 1;
+        partSize = dataSet.size() / this.partsQuantity;
     }
 
     @Override

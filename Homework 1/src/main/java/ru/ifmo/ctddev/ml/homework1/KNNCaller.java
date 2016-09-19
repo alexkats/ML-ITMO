@@ -25,7 +25,9 @@ public class KNNCaller {
     }
 
     public void splitToOptimalTrainingTestingDataSets() {
-        splitter.setPartsQuantity(algorithm.getOptimalK());
+        int optimalK = algorithm.getOptimalK();
+        System.err.println(optimalK);
+        splitter.setPartsQuantity(optimalK);
         splitter.split(0);
     }
 

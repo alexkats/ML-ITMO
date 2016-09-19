@@ -1,13 +1,18 @@
 package ru.ifmo.ctddev.ml.homework1;
 
 import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
+import ru.ifmo.ctddev.ml.homework1.splitter.DataSetSplitter;
+import ru.ifmo.ctddev.ml.homework1.splitter.DefaultDataSetSplitter;
 import ru.ifmo.ctddev.ml.homework1.ui.UIException;
 import ru.ifmo.ctddev.ml.homework1.ui.UIStarter;
+import ru.ifmo.ctddev.ml.utils.DistanceCounter;
+import ru.ifmo.ctddev.ml.utils.SpatialTransformations;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,9 +27,13 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         constructDataSet();
+        Collections.shuffle(dataSet);
+        DataSetSplitter<DataSetEntity> splitter = new DefaultDataSetSplitter<DataSetEntity>(dataSet, true);
+        KNNCaller knnCaller = new KNNCaller(splitter, DistanceCounter::countEuclidDistance, SpatialTransformations::powerTransformation);
+        knnCaller.splitToOptimalTrainingTestingDataSets();
 
         try {
-            UIStarter.start(dataSet);
+            UIStarter.start(dataSet, knnCaller.getDataClassificationByAlgorithm(knnCaller.getOptimalTrainingDataSet(), knnCaller.getOptimalTestingDataSet()));
         } catch (UIException e) {
             e.printStackTrace();
         }

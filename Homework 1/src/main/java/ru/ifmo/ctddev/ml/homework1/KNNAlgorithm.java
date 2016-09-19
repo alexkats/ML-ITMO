@@ -36,11 +36,11 @@ public class KNNAlgorithm {
         for (int i = 0; i < FOLD_NUMBER; i++) {
             int sumMistakes = 0;
             splitter.setPartsQuantity(i);
-            for (int j = 0; j < i; j++) {
+            for (int j = 0; j < i + 1; j++) {
                 splitter.split(j);
                 sumMistakes += countMistakes(splitter.getTrainingDataSet(), splitter.getTestingDataSet());
             }
-            double averageMistakes = (double) sumMistakes / (double) i;
+            double averageMistakes = (double) sumMistakes / (double) (i + 1);
             if (optimalK == -1 || averageMistakes < minAverageMistakes) {
                 optimalK = i;
                 minAverageMistakes = averageMistakes;

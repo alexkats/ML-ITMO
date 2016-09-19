@@ -23,12 +23,14 @@ public class UIStarter {
 
     private static boolean initialized = false;
     private final List<DataSetEntity> dataSet;
+    private final List<DataSetEntity> predictedDataSet;
     private boolean success;
     private JFrame mainWindow;
     private JPanel cards;
 
-    private UIStarter(List<DataSetEntity> dataSet) {
+    private UIStarter(List<DataSetEntity> dataSet, List<DataSetEntity> predictedDataSet) {
         this.dataSet = dataSet;
+        this.predictedDataSet = predictedDataSet;
 
         SwingUtilities.invokeLater(() -> {
             init();
@@ -80,12 +82,12 @@ public class UIStarter {
         mainWindow.setVisible(true);
     }
 
-    public static void start(List<DataSetEntity> dataSet) throws UIException {
+    public static void start(List<DataSetEntity> dataSet, List<DataSetEntity> predictedDataSet) throws UIException {
         if (initialized) {
             throw new UIException("Already opened");
         }
 
-        UIStarter starter = new UIStarter(dataSet);
+        UIStarter starter = new UIStarter(dataSet, predictedDataSet);
         initialized = starter.success;
     }
 
@@ -108,6 +110,12 @@ public class UIStarter {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.clearRect(0, 0, getWidth(), getHeight());
+
+            predictedDataSet.forEach(entity -> {
+                TwoDimensionalPoint pointInChart = calcucatePoint(entity, getWidth(), getHeight());
+                g.setColor(entity.getEntityClass() == 0 ? Color.RED : Color.GREEN);
+                g.fillOval((int) Math.round(pointInChart.getX()), (int) Math.round(pointInChart.getY()), 10, 10);
+            });
         }
     }
 
