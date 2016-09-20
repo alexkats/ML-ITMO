@@ -13,7 +13,7 @@ import java.util.function.Function;
 public class WeightCalculator {
 
     private static final int POWER = 5;
-    private static final Function<Double, Double> KERNEL_FUNCTION = aDouble -> 3 * aDouble * aDouble / 2;
+    private static final Function<Double, Double> KERNEL_FUNCTION = aDouble -> Math.exp(-(aDouble * aDouble));
     private static final double H = 0.5;
 
     public static double simpleTransformation(List<DataSetDistance> distances, Integer indexInList,
