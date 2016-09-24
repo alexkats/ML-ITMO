@@ -11,6 +11,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>homework1</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>ru.ifmo.ctddev</groupId>
