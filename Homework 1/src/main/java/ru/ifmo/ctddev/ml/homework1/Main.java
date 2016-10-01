@@ -51,8 +51,8 @@ public class Main {
 
             String[] splittedLine = line.split(",");
             DataSetEntity entity = new DataSetEntity(new TwoDimensionalPoint(Double.parseDouble(splittedLine[0]),
-                                                                             Double.parseDouble(splittedLine[1])),
-                                                     Integer.parseInt(splittedLine[2]));
+                    Double.parseDouble(splittedLine[1])),
+                    Integer.parseInt(splittedLine[2]));
             dataSet.add(entity);
         }
     }

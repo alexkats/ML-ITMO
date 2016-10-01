@@ -1,5 +1,6 @@
 package ru.ifmo.ctddev.ml.utils;
 
+import ru.ifmo.ctddev.ml.common.MathUtils;
 import ru.ifmo.ctddev.ml.core.entities.DataSetDistance;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.function.Function;
  * @author Maxim Slyusarenko
  * @since 18.09.16
  */
+
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class WeightCalculator {
 
@@ -17,17 +19,20 @@ public class WeightCalculator {
     private static final double H = 0.5;
 
     public static double simpleTransformation(List<DataSetDistance> distances, Integer indexInList,
-                                              Integer nearestNeighborsCount) {
+                                              Integer nearestNeighborsCount)
+    {
         return 1.0;
     }
 
     public static double powerTransformation(List<DataSetDistance> distances, Integer indexInList,
-                                             Integer nearestNeighborsCount) {
+                                             Integer nearestNeighborsCount)
+    {
         return Math.pow(distances.get(indexInList).getDistance(), POWER);
     }
 
     public static double fixedParzenRosenblattWindow(List<DataSetDistance> distances, Integer indexInList,
-                                                     Integer nearestNeighborsCount) {
+                                                     Integer nearestNeighborsCount)
+    {
         double functionArg = distances.get(indexInList).getDistance() / H;
         if (MathUtils.isGreater(Math.abs(functionArg), 1.0d)) {
             return 0;
@@ -37,8 +42,8 @@ public class WeightCalculator {
     }
 
     public static double variableParzenRosenblattWindow(List<DataSetDistance> distances, Integer indexInList,
-                                                        Integer nearestNeighborsCount) {
-
+                                                        Integer nearestNeighborsCount)
+    {
         double functionArg = distances.get(indexInList).getDistance() / distances.get(nearestNeighborsCount + 1).getDistance();
         if (MathUtils.isGreater(Math.abs(functionArg), 1.0d)) {
             return 0;

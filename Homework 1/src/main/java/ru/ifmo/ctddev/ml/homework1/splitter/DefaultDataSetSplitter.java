@@ -19,20 +19,24 @@ public class DefaultDataSetSplitter<E> implements DataSetSplitter<E> {
     private List<E> trainingDataSet;
     private List<E> testingDataSet;
 
-    private static final int DEFAULT_PARTS_QUOANTITY = 10;
+    private static final int DEFAULT_PARTS_QUANTITY = 10;
 
+    @SuppressWarnings("unused")
     public DefaultDataSetSplitter(List<E> dataSet) {
-        this(dataSet, DEFAULT_PARTS_QUOANTITY, false);
+        this(dataSet, DEFAULT_PARTS_QUANTITY, false);
     }
 
+    @SuppressWarnings("unused")
     public DefaultDataSetSplitter(List<E> dataSet, boolean createInstance) {
-        this(dataSet, DEFAULT_PARTS_QUOANTITY, createInstance);
+        this(dataSet, DEFAULT_PARTS_QUANTITY, createInstance);
     }
 
+    @SuppressWarnings("unused")
     public DefaultDataSetSplitter(List<E> dataSet, int partsQuantity) {
         this(dataSet, partsQuantity, false);
     }
 
+    @SuppressWarnings("unused")
     public DefaultDataSetSplitter(List<E> dataSet, int partsQuantity, boolean createInstance) {
         this.dataSet = createInstance ? new ArrayList<>(dataSet) : dataSet;
         this.partsQuantity = partsQuantity;

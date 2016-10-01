@@ -9,6 +9,7 @@ import java.util.function.Function;
  * @author Maxim Slyusarenko
  * @since 24.09.16
  */
+
 public class GradientDescent {
 
     private final ThreeDimensionalVector INITIAL_VECTOR = new ThreeDimensionalVector(0, 1, 1);

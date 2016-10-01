@@ -7,6 +7,7 @@ import java.util.List;
  * @since 17.09.16
  */
 
+@SuppressWarnings("unused")
 public interface DataSetSplitter<E> {
 
     /**
@@ -19,10 +20,10 @@ public interface DataSetSplitter<E> {
 
     /**
      * Returns size of each part of data set
+     *
      * @return size of each part of data set
      */
     int getPartSize();
-
 
     /**
      * Sets quantity of parts for splitting data set (aka <tt>k</tt>)
@@ -42,6 +43,7 @@ public interface DataSetSplitter<E> {
      * Returns training data set after splitting data set
      *
      * @return training data set after splitting data set
+     *
      * @throws NullPointerException if {@link #split(int)} was not called before
      */
     List<E> getTrainingDataSet();
@@ -50,6 +52,7 @@ public interface DataSetSplitter<E> {
      * Returns testing data set after splitting data set
      *
      * @return testing data set after splitting data set
+     *
      * @throws NullPointerException if {@link #split(int)} was not called before
      */
     List<E> getTestingDataSet();
@@ -59,6 +62,7 @@ public interface DataSetSplitter<E> {
      * and returns training data set
      *
      * @param partNumber number of part of splitted data set to be added to testing data set
+     *
      * @return training data set after splitting data set
      */
     List<E> splitAndGetTrainingDataSet(int partNumber);
@@ -68,6 +72,7 @@ public interface DataSetSplitter<E> {
      * and returns testing data set
      *
      * @param partNumber number of part of splitted data set to be added to testing data set
+     *
      * @return testing data set after splitting data set
      */
     List<E> splitAndGetTestingDataSet(int partNumber);

@@ -93,6 +93,7 @@ public class UIStarter {
     }
 
     private class ChartPanel1 extends JPanel {
+
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -107,6 +108,7 @@ public class UIStarter {
     }
 
     private class ChartPanel2 extends JPanel {
+
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -121,6 +123,7 @@ public class UIStarter {
     }
 
     private enum ComboBoxOptions {
+
         INITIAL("Initial Data Set"),
         PREDICTED("Predicted Data Set");
 

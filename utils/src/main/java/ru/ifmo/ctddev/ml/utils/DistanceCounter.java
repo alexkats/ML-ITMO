@@ -6,6 +6,7 @@ import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
  * @author Maxim Slyusarenko
  * @since 17.09.16
  */
+
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class DistanceCounter {
 

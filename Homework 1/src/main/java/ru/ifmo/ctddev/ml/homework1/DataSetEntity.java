@@ -17,6 +17,14 @@ public class DataSetEntity {
     private int entityClass;
 
     @Override
+    public int hashCode() {
+        int hash = feature.hashCode();
+        hash += 29 * entityClass;
+
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

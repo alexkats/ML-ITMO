@@ -7,6 +7,7 @@ package ru.ifmo.ctddev.ml.core.ui;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class UIException extends Exception {
+
     public UIException() {
         this("Unknown");
     }

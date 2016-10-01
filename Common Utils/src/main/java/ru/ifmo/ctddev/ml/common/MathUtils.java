@@ -1,4 +1,4 @@
-package ru.ifmo.ctddev.ml.utils;
+package ru.ifmo.ctddev.ml.common;
 
 /**
  * @author Alexey Katsman

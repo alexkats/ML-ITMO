@@ -7,6 +7,7 @@ import lombok.Getter;
  * @author Maxim Slyusarenko
  * @since 24.09.16
  */
+
 @AllArgsConstructor
 @Getter
 public class DataSetEntity {

@@ -1,12 +1,10 @@
 package ru.ifmo.ctddev.ml.homework1;
 
+import ru.ifmo.ctddev.ml.common.MathUtils;
 import ru.ifmo.ctddev.ml.core.entities.DataSetDistance;
 import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
 import ru.ifmo.ctddev.ml.core.interfaces.TriFunction;
-import ru.ifmo.ctddev.ml.homework1.splitter.DataSetSplitter;
-import ru.ifmo.ctddev.ml.utils.MathUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
@@ -15,6 +13,8 @@ import java.util.stream.Collectors;
  * @author Maxim Slyusarenko
  * @since 17.09.16
  */
+
+@SuppressWarnings("WeakerAccess")
 public class KNNAlgorithm {
 
     private static final int CLASSES_NUMBER = 2;
@@ -26,7 +26,8 @@ public class KNNAlgorithm {
 
     public KNNAlgorithm(BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter,
                         TriFunction<List<DataSetDistance>, Integer, Integer, Double> weightCalculator,
-                        List<DataSetEntity> trainingDataSet) {
+                        List<DataSetEntity> trainingDataSet)
+    {
         this.distanceCounter = distanceCounter;
         this.weightCalculator = weightCalculator;
         this.trainingDataSet = trainingDataSet;

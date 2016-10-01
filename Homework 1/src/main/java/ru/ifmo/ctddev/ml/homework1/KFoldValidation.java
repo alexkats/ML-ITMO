@@ -1,11 +1,11 @@
 package ru.ifmo.ctddev.ml.homework1;
 
+import ru.ifmo.ctddev.ml.common.MathUtils;
 import ru.ifmo.ctddev.ml.core.entities.DataSetDistance;
 import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
 import ru.ifmo.ctddev.ml.core.interfaces.TriFunction;
 import ru.ifmo.ctddev.ml.homework1.splitter.DataSetSplitter;
 import ru.ifmo.ctddev.ml.homework1.splitter.DefaultDataSetSplitter;
-import ru.ifmo.ctddev.ml.utils.MathUtils;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -14,6 +14,8 @@ import java.util.function.BiFunction;
  * @author Maxim Slyusarenko
  * @since 19.09.16
  */
+
+@SuppressWarnings("WeakerAccess")
 public class KFoldValidation {
 
     public static final int FOLD_NUMBER = 5;
@@ -24,7 +26,8 @@ public class KFoldValidation {
 
     public KFoldValidation(List<DataSetEntity> dataSet,
                            BiFunction<TwoDimensionalPoint, TwoDimensionalPoint, Double> distanceCounter,
-                           TriFunction<List<DataSetDistance>, Integer, Integer, Double> weightCalculator) {
+                           TriFunction<List<DataSetDistance>, Integer, Integer, Double> weightCalculator)
+    {
         this.splitter = new DefaultDataSetSplitter<>(dataSet, FOLD_NUMBER, true);
         this.distanceCounter = distanceCounter;
         this.weightCalculator = weightCalculator;

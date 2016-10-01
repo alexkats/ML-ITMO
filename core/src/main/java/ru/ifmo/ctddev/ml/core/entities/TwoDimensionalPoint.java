@@ -2,11 +2,13 @@ package ru.ifmo.ctddev.ml.core.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import ru.ifmo.ctddev.ml.common.MathUtils;
 
 /**
  * @author Maxim Slyusarenko
  * @since 17.09.16
  */
+
 @AllArgsConstructor
 @Getter
 public class TwoDimensionalPoint {
@@ -26,6 +28,9 @@ public class TwoDimensionalPoint {
 
         TwoDimensionalPoint other = (TwoDimensionalPoint) obj;
 
-        return x == other.x && y == other.y;
+        boolean equals = MathUtils.equals(x, other.x);
+        equals &= MathUtils.equals(y, other.y);
+
+        return equals;
     }
 }
