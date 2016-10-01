@@ -1,7 +1,7 @@
 package ru.ifmo.ctddev.ml.homework1;
 
 import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
-import ru.ifmo.ctddev.ml.homework1.ui.UIException;
+import ru.ifmo.ctddev.ml.core.ui.UIException;
 import ru.ifmo.ctddev.ml.homework1.ui.UIStarter;
 import ru.ifmo.ctddev.ml.utils.DistanceCounter;
 import ru.ifmo.ctddev.ml.utils.WeightCalculator;

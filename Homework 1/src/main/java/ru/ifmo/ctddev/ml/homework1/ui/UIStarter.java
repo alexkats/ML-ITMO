@@ -1,6 +1,7 @@
 package ru.ifmo.ctddev.ml.homework1.ui;
 
 import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
+import ru.ifmo.ctddev.ml.core.ui.UIException;
 import ru.ifmo.ctddev.ml.homework1.DataSetEntity;
 
 import javax.swing.JComboBox;

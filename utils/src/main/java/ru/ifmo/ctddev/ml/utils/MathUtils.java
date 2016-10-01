@@ -5,7 +5,7 @@ package ru.ifmo.ctddev.ml.utils;
  * @since 18.09.16
  */
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class MathUtils {
 
     private static final double EPS = 1.0E-9D;
