@@ -13,32 +13,22 @@ import java.util.function.BiFunction;
 
 public class GradientDescent {
 
-    private final ThreeDimensionalVector INITIAL_VECTOR = new ThreeDimensionalVector(0, 1, 1);
-    private final double GRADIENT_STEP = 0.5;
-    private final BiFunction<Double, Double, Double> MISTAKE_FUNCTION = (expected, actual) -> Math.pow(expected - actual, 2);
-    private final BiFunction<Double, Double, Double> MISTAKE_FUNCTION_DERIVATIVE = (expected, actual) -> 2 * (expected - actual);
-    private final double stopIfLess = 1000.0;
+    private static final ThreeDimensionalVector INITIAL_VECTOR = new ThreeDimensionalVector(0, 1, 1);
+    private static final double GRADIENT_STEP = 0.5;
+    private static final BiFunction<Double, Double, Double> MISTAKE_FUNCTION_DERIVATIVE = (expected, actual) -> 2 * (expected - actual);
+    private static final double STOP_IF_LESS = 1000.0;
+    private static final int MAX_GRADIENT_STEPS = 100000;
 
     public ThreeDimensionalVector solve(List<DataSetEntity> entities) {
-        ThreeDimensionalVector current = new ThreeDimensionalVector(0, 1, 1);
+        ThreeDimensionalVector current = INITIAL_VECTOR;
         double lastEmpiricalRisk = -1.0;
-        while (MathUtils.equals(lastEmpiricalRisk, -1.0) ||
-                MathUtils.isLess(Math.abs(countEmpiricalRisk(entities, current) - lastEmpiricalRisk), stopIfLess)) {
+        int gradientStepNumber = 0;
+        while (gradientStepNumber < MAX_GRADIENT_STEPS && (MathUtils.equals(lastEmpiricalRisk, -1.0) ||
+                !MathUtils.isLess(Math.abs(EmpiricalRiskCounter.countEmpiricalRisk(entities, current) - lastEmpiricalRisk), STOP_IF_LESS))) {
             current = countNextStepVector(current, entities);
+            gradientStepNumber++;
         }
         return current;
-    }
-
-    private double countEmpiricalRisk(List<DataSetEntity> entities, ThreeDimensionalVector current) {
-        double empiricalRisk = 0;
-        for (DataSetEntity entity : entities) {
-            empiricalRisk += MISTAKE_FUNCTION.apply(countCost(current, entity.getArea(), entity.getRoom()), (double) entity.getPrice());
-        }
-        return empiricalRisk;
-    }
-
-    private double countCost(ThreeDimensionalVector current, int area, int room) {
-        return current.getZ() + current.getX() * area + current.getZ() * room;
     }
 
     private ThreeDimensionalVector countNextStepVector(ThreeDimensionalVector current, List<DataSetEntity> entities) {
@@ -49,7 +39,7 @@ public class GradientDescent {
         ThreeDimensionalVector result = new ThreeDimensionalVector(0, 0, 0);
         for (DataSetEntity entity : entities) {
             ThreeDimensionalVector entityVector = new ThreeDimensionalVector(1, entity.getArea(), entity.getRoom());
-            double mistake = MISTAKE_FUNCTION_DERIVATIVE.apply(countCost(current, entity.getArea(), entity.getRoom()),
+            double mistake = MISTAKE_FUNCTION_DERIVATIVE.apply(EmpiricalRiskCounter.countCost(current, entity.getArea(), entity.getRoom()),
                     (double) entity.getPrice());
             result = result.add(entityVector.mulOnConstant(mistake));
         }
