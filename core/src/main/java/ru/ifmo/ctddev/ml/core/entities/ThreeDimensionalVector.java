@@ -44,4 +44,16 @@ public class ThreeDimensionalVector {
 
         return equals;
     }
+
+    public ThreeDimensionalVector sub(ThreeDimensionalVector other) {
+        return new ThreeDimensionalVector(x - other.getX(), y - other.getZ(), z - other.getZ());
+    }
+
+    public ThreeDimensionalVector add(ThreeDimensionalVector other) {
+        return new ThreeDimensionalVector(x + other.getX(), y + other.getZ(), z + other.getZ());
+    }
+
+    public ThreeDimensionalVector mulOnConstant(double constant) {
+        return new ThreeDimensionalVector(x * constant, y * constant, z * constant);
+    }
 }
