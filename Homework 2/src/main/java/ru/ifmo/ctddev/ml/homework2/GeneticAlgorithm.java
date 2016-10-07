@@ -16,7 +16,7 @@ public class GeneticAlgorithm {
 
     private static final int POPULATION_SIZE = 50;
     private static final int FIXED_POPULATION_SIZE = 4;
-    private static final double STOP_IF_LESS = 10000000.0;
+    private static final double STOP_IF_LESS = 10000000.0; // TODO: look at results and swap to something non-random
     private static final int MAX_GENERATION_COUNT = 100000;
 
     public ThreeDimensionalVector solve(List<DataSetEntity> entities) {
