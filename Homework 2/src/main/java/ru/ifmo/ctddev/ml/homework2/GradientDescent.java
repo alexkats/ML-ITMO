@@ -11,7 +11,7 @@ import java.util.function.BiFunction;
  * @since 24.09.16
  */
 
-public class GradientDescent {
+public class GradientDescent implements Algorithm {
 
     private static final ThreeDimensionalVector INITIAL_VECTOR = new ThreeDimensionalVector(0, 1, 1);
     private static final double GRADIENT_STEP = 0.5;
@@ -19,6 +19,7 @@ public class GradientDescent {
     private static final double STOP_IF_LESS = 1000.0; // TODO: look at results and swap to something non-random
     private static final int MAX_GRADIENT_STEPS = 100000;
 
+    @Override
     public ThreeDimensionalVector solve(List<DataSetEntity> entities) {
         ThreeDimensionalVector current = INITIAL_VECTOR;
         double lastEmpiricalRisk = -1.0;

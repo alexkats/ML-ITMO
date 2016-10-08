@@ -12,13 +12,14 @@ import java.util.Random;
  * @author Maxim Slyusarenko
  * @since 07.10.16
  */
-public class GeneticAlgorithm {
+public class GeneticAlgorithm implements Algorithm {
 
     private static final int POPULATION_SIZE = 50;
     private static final int FIXED_POPULATION_SIZE = 4;
     private static final double STOP_IF_LESS = 10000000.0; // TODO: look at results and swap to something non-random
     private static final int MAX_GENERATION_COUNT = 100000;
 
+    @Override
     public ThreeDimensionalVector solve(List<DataSetEntity> entities) {
         List<ThreeDimensionalVector> population = formPopulation();
         sortPopulation(entities, population);
