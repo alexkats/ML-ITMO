@@ -1,7 +1,5 @@
 package ru.ifmo.ctddev.ml.homework2;
 
-import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,14 +14,17 @@ import java.util.List;
 public class Main {
 
     private static List<DataSetEntity> dataSet;
+    private static DataSetNormalizator normalizator;
     private static final String FILE_NAME = "Homework 2/prices.txt";
     private static final int GRADIENT_DESCENT_ALGORITHM_NUMBER = 0;
     private static final int GENETIC_ALGORITHM_NUMBER = 1;
 
     public static void main(String[] args) throws IOException {
         constructDataSet();
-        AlgorithmRunner runner = new AlgorithmRunner(dataSet, GRADIENT_DESCENT_ALGORITHM_NUMBER);
+        normalizator = new DataSetNormalizator(dataSet);
+        AlgorithmRunner runner = new AlgorithmRunner(normalizator.normalize(), GRADIENT_DESCENT_ALGORITHM_NUMBER);
         System.out.println(runner.getBestVector());
+        System.out.println(runner.getPriceForFlat(2104, 3, normalizator.getNormalizationArea(), normalizator.getNormalizationRoom(), normalizator.getNormalizationPrice()));
     }
 
     private static void constructDataSet() throws IOException {

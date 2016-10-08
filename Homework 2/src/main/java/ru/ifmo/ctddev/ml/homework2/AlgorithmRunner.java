@@ -26,8 +26,9 @@ public class AlgorithmRunner {
         return algorithm.solve(entities);
     }
 
-    public int getPriceForFlat(int area, int rooms) {
+    public int getPriceForFlat(int area, int rooms, double normalizationArea, double normalizationRoom, double normalizationPrice) {
         ThreeDimensionalVector bestVector = getBestVector();
-        return (int) (bestVector.getZ() + bestVector.getX() * area + bestVector.getY() * rooms);
+        return (int) (normalizationPrice * (bestVector.getZ() +
+                bestVector.getX() * (area / normalizationArea) + bestVector.getY() * (rooms / normalizationRoom)));
     }
 }

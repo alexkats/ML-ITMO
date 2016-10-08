@@ -12,13 +12,13 @@ import lombok.Getter;
 @Getter
 public class DataSetEntity {
 
-    private final int area;
-    private final int room;
-    private final int price;
+    private final double area;
+    private final double room;
+    private final double price;
 
     @Override
     public int hashCode() {
-        int hash = area;
+        int hash = (int) area;
         hash += 31 * room;
         hash += 31 * 31 * price;
 
