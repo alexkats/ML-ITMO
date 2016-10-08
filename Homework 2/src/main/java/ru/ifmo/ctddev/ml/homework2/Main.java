@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Alexey Katsman
@@ -22,9 +23,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
         constructDataSet();
         normalizator = new DataSetNormalizator(dataSet);
-        AlgorithmRunner runner = new AlgorithmRunner(normalizator.normalize(), GRADIENT_DESCENT_ALGORITHM_NUMBER);
-        System.out.println(runner.getBestVector());
-        System.out.println(runner.getPriceForFlat(2104, 3, normalizator.getNormalizationArea(), normalizator.getNormalizationRoom(), normalizator.getNormalizationPrice()));
+        AlgorithmRunner runner = new AlgorithmRunner(normalizator.normalize(), GENETIC_ALGORITHM_NUMBER);
+//        System.out.println(runner.getBestVector());
+        System.out.println(runner.getPriceForFlat(2526, 3, normalizator.getNormalizationArea(), normalizator.getNormalizationRoom(), normalizator.getNormalizationPrice()));
     }
 
     private static void constructDataSet() throws IOException {

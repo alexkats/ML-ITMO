@@ -29,7 +29,6 @@ public class GradientDescent implements Algorithm {
             lastEmpiricalRisk = EmpiricalRiskCounter.countEmpiricalRisk(entities, current);
             current = countNextStepVector(current, entities);
             gradientStepNumber++;
-            System.out.println(1);
         }
         return current;
     }

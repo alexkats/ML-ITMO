@@ -4,7 +4,6 @@ import ru.ifmo.ctddev.ml.common.MathUtils;
 import ru.ifmo.ctddev.ml.core.entities.ThreeDimensionalVector;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -16,8 +15,7 @@ public class GeneticAlgorithm implements Algorithm {
 
     private static final int POPULATION_SIZE = 50;
     private static final int FIXED_POPULATION_SIZE = 4;
-    private static final double STOP_IF_LESS = 10000000.0; // TODO: look at results and swap to something non-random
-    private static final int MAX_GENERATION_COUNT = 100000;
+    private static final int MAX_GENERATION_COUNT = 1000;
 
     @Override
     public ThreeDimensionalVector solve(List<DataSetEntity> entities) {
@@ -27,7 +25,7 @@ public class GeneticAlgorithm implements Algorithm {
         double bestEmpiricalRiskEver = bestEmpiricalRisk;
         ThreeDimensionalVector bestVector = population.get(0);
         int generationNumber = 0;
-        while (generationNumber < MAX_GENERATION_COUNT && !MathUtils.isLess(bestEmpiricalRisk, STOP_IF_LESS)) {
+        while (generationNumber < MAX_GENERATION_COUNT) {
             population = formNewGeneration(population);
             sortPopulation(entities, population);
             bestEmpiricalRisk = EmpiricalRiskCounter.countEmpiricalRisk(entities, population.get(0));
@@ -44,42 +42,41 @@ public class GeneticAlgorithm implements Algorithm {
         population.sort((o1, o2) -> {
             double firstEmpiricalRisk = EmpiricalRiskCounter.countEmpiricalRisk(entities, o1);
             double secondEmpiricalRisk = EmpiricalRiskCounter.countEmpiricalRisk(entities, o2);
-            return Double.valueOf(firstEmpiricalRisk).compareTo(secondEmpiricalRisk);
+            return Double.valueOf(secondEmpiricalRisk).compareTo(firstEmpiricalRisk);
         });
     }
 
     private List<ThreeDimensionalVector> formPopulation() {
+        Random random = new Random();
         List<ThreeDimensionalVector> population = new ArrayList<>();
         for (int i = 0; i < POPULATION_SIZE; i++) {
-            population.add(new ThreeDimensionalVector(randomDouble(), randomDouble(), randomDouble()));
+            population.add(new ThreeDimensionalVector(random.nextDouble(), random.nextDouble(), random.nextDouble()));
         }
         return population;
     }
 
     private ThreeDimensionalVector crossing(ThreeDimensionalVector first, ThreeDimensionalVector second) {
-        Random random = new Random();
+        /*Random random = new Random();
         return new ThreeDimensionalVector(random.nextBoolean() ? first.getX() : second.getX(),
                 random.nextBoolean() ? first.getY() : second.getY(),
-                random.nextBoolean() ? first.getZ() : second.getZ());
+                random.nextBoolean() ? first.getZ() : second.getZ());*/
+        // TODO: maybe, change with some other crossing algorithm
+        return new ThreeDimensionalVector((first.getX() + second.getX()) / 2, (first.getY() + second.getY()) / 2,
+                (first.getZ() + second.getZ()) / 2);
     }
 
     private ThreeDimensionalVector mutation(ThreeDimensionalVector mutate) {
         Random random = new Random();
         int index = random.nextInt(4);
         if (index == 0) {
-            return new ThreeDimensionalVector(randomDouble(), mutate.getY(), mutate.getZ());
+            return new ThreeDimensionalVector(random.nextDouble(), mutate.getY(), mutate.getZ());
         } else if (index == 1) {
-            return new ThreeDimensionalVector(mutate.getX(), randomDouble(), mutate.getZ());
+            return new ThreeDimensionalVector(mutate.getX(), random.nextDouble(), mutate.getZ());
         } else if (index == 2) {
-            return new ThreeDimensionalVector(mutate.getX(), mutate.getY(), randomDouble());
+            return new ThreeDimensionalVector(mutate.getX(), mutate.getY(), random.nextDouble());
         } else {
             return mutate;
         }
-    }
-
-    private double randomDouble() {
-        Random random = new Random();
-        return (random.nextDouble() * random.nextInt());
     }
 
     /**
