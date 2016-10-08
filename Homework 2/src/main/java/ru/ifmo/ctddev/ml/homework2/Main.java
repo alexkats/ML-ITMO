@@ -5,6 +5,7 @@ import ru.ifmo.ctddev.ml.core.entities.TwoDimensionalPoint;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,17 +16,18 @@ import java.util.List;
 public class Main {
 
     private static List<DataSetEntity> dataSet;
-    private static final String FILE_NAME = "Homework2/prices.txt";
+    private static final String FILE_NAME = "Homework 2/prices.txt";
     private static final int GRADIENT_DESCENT_ALGORITHM_NUMBER = 0;
     private static final int GENETIC_ALGORITHM_NUMBER = 1;
 
     public static void main(String[] args) throws IOException {
         constructDataSet();
         AlgorithmRunner runner = new AlgorithmRunner(dataSet, GRADIENT_DESCENT_ALGORITHM_NUMBER);
-
+        System.out.println(runner.getBestVector());
     }
 
     private static void constructDataSet() throws IOException {
+        dataSet = new ArrayList<>();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_NAME));
 
         while (true) {

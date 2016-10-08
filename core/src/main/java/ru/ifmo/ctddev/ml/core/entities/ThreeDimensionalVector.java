@@ -45,6 +45,11 @@ public class ThreeDimensionalVector {
         return equals;
     }
 
+    @Override
+    public String toString() {
+        return x + " * x + " + y + " * y + " + z;
+    }
+
     public ThreeDimensionalVector sub(ThreeDimensionalVector other) {
         return new ThreeDimensionalVector(x - other.getX(), y - other.getZ(), z - other.getZ());
     }
