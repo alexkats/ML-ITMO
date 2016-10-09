@@ -9,6 +9,20 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
+	<repositories>
+		<repository>
+			<id>jzy3d-releases</id>
+			<name>Jzy3d Snapshots</name>
+			<url>http://maven.jzy3d.org/releases</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>homework2</artifactId>
 
@@ -17,6 +31,11 @@
 			<groupId>ru.ifmo.ctddev</groupId>
 			<artifactId>utils</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>jzy3d-api</artifactId>
+			<version>0.9.1</version>
 		</dependency>
 	</dependencies>
 
