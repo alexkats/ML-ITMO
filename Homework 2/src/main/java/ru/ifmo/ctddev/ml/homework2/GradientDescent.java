@@ -13,8 +13,8 @@ import java.util.function.Function;
 
 public class GradientDescent implements Algorithm {
 
-    private static final ThreeDimensionalVector INITIAL_VECTOR = new ThreeDimensionalVector(0.1, 0.02, 0.01);
-    private static final double GRADIENT_STEP = 0.0016;
+    private static final ThreeDimensionalVector INITIAL_VECTOR = new ThreeDimensionalVector(1, 0.008, 0.01);
+    private static final double GRADIENT_STEP = 0.0001;
     private static final Function<Double, Double> DECREASING_FUNCTION_DERIVATIVE = a -> -Math.exp(-a);
     private static final double STOP_IF_LESS = 0.05;
     private static final int MAX_GRADIENT_STEPS = 1000;

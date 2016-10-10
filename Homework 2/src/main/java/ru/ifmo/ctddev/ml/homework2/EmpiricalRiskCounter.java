@@ -24,6 +24,14 @@ public class EmpiricalRiskCounter {
         return empiricalRisk;
     }
 
+    public  static double countEmpiricalRisk2(List<DataSetEntity> entities, ThreeDimensionalVector current) {
+        double empiricalRisk = 0;
+        for (DataSetEntity entity : entities) {
+            empiricalRisk += MISTAKE_FUNCTION.apply(countCost(current, entity.getArea(), entity.getRoom()), entity.getPrice());
+        }
+        return empiricalRisk;
+    }
+
     public static double countCost(ThreeDimensionalVector current, double area, double room) {
         return current.getZ() + current.getX() * area + current.getZ() * room;
     }

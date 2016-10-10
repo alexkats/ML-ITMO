@@ -56,11 +56,6 @@ public class GeneticAlgorithm implements Algorithm {
     }
 
     private ThreeDimensionalVector crossing(ThreeDimensionalVector first, ThreeDimensionalVector second) {
-        /*Random random = new Random();
-        return new ThreeDimensionalVector(random.nextBoolean() ? first.getX() : second.getX(),
-                random.nextBoolean() ? first.getY() : second.getY(),
-                random.nextBoolean() ? first.getZ() : second.getZ());*/
-        // TODO: maybe, change with some other crossing algorithm
         return new ThreeDimensionalVector((first.getX() + second.getX()) / 2, (first.getY() + second.getY()) / 2,
                 (first.getZ() + second.getZ()) / 2);
     }

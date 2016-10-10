@@ -1,8 +1,5 @@
 package ru.ifmo.ctddev.ml.homework2;
 
-import org.jzy3d.chart.Chart;
-import org.jzy3d.chart.ChartLauncher;
-import org.jzy3d.chart.factories.AWTChartComponentFactory;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
@@ -11,9 +8,7 @@ import org.jzy3d.maths.Range;
 import org.jzy3d.plot3d.builder.Builder;
 import org.jzy3d.plot3d.builder.Mapper;
 import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
-import org.jzy3d.plot3d.primitives.ScatterMultiColor;
 import org.jzy3d.plot3d.primitives.Shape;
-import org.jzy3d.plot3d.rendering.canvas.Quality;
 import ru.ifmo.ctddev.ml.core.entities.ThreeDimensionalVector;
 
 import java.io.BufferedReader;
@@ -21,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Alexey Katsman
@@ -42,16 +38,23 @@ public class Main {
         constructDataSet();
         normalizator = new DataSetNormalizator(dataSet);
         AlgorithmRunner runner = new AlgorithmRunner(normalizator.normalize(), GRADIENT_DESCENT_ALGORITHM_NUMBER);
-        constructSurface(runner.getBestVector());
-        constructPoints();
-        ScatterMultiColor scatter = new ScatterMultiColor(points, new ColorMapper(new ColorMapRainbow(), -1.0f, 1.0f));
-        scatter.setWidth(5.0f);
-        Chart chart = AWTChartComponentFactory.chart(Quality.Advanced, "newt");
-        chart.getScene().add(scatter);
-        chart.getScene().getGraph().add(surface);
-        ChartLauncher.openChart(chart);
+//        constructSurface(runner.getBestVector());
+//        constructPoints();
+//        ScatterMultiColor scatter = new ScatterMultiColor(points, new ColorMapper(new ColorMapRainbow(), -1.0f, 1.0f));
+//        scatter.setWidth(5.0f);
+//        Chart chart = AWTChartComponentFactory.chart(Quality.Advanced, "newt");
+//        chart.getScene().add(scatter);
+//        chart.getScene().getGraph().add(surface);
+//        ChartLauncher.openChart(chart);
 //        System.out.println(runner.getBestVector());
-        System.out.println(runner.getPriceForFlat(2526, 3, normalizator.getNormalizationArea(), normalizator.getNormalizationRoom(), normalizator.getNormalizationPrice()));
+        double error = 0.0;
+        for (DataSetEntity entity : dataSet) {
+            error += Math.abs(entity.getPrice() - runner.getPriceForFlat((int) entity.getArea(), (int) entity.getRoom(), normalizator.getNormalizationArea(), normalizator.getNormalizationRoom(), normalizator.getNormalizationPrice()));
+            System.out.println(Math.abs(entity.getPrice() - runner.getPriceForFlat((int) entity.getArea(), (int) entity.getRoom(), normalizator.getNormalizationArea(), normalizator.getNormalizationRoom(), normalizator.getNormalizationPrice())));
+        }
+        System.out.println(runner.getBestVector());
+        System.out.printf(Locale.ENGLISH, "%.2f", error / dataSet.size());
+//        System.out.println(runner.getPriceForFlat(2526, 3, normalizator.getNormalizationArea(), normalizator.getNormalizationRoom(), normalizator.getNormalizationPrice()));
     }
 
     private static void constructSurface(ThreeDimensionalVector vector) {
