@@ -53,8 +53,8 @@ public class Main {
             System.out.println(Math.abs(entity.getPrice() - runner.getPriceForFlat((int) entity.getArea(), (int) entity.getRoom(), normalizator.getNormalizationArea(), normalizator.getNormalizationRoom(), normalizator.getNormalizationPrice())));
         }
         System.out.println(runner.getBestVector());
-        System.out.printf(Locale.ENGLISH, "%.2f", error / dataSet.size());
-//        System.out.println(runner.getPriceForFlat(2526, 3, normalizator.getNormalizationArea(), normalizator.getNormalizationRoom(), normalizator.getNormalizationPrice()));
+        System.out.printf(Locale.ENGLISH, "%.2f\n", error / dataSet.size());
+        System.out.println(runner.getPriceForFlat(2416, 3, normalizator.getNormalizationArea(), normalizator.getNormalizationRoom(), normalizator.getNormalizationPrice()));
     }
 
     private static void constructSurface(ThreeDimensionalVector vector) {
