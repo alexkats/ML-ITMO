@@ -12,10 +12,11 @@
 	<modules>
 		<module>core</module>
 		<module>utils</module>
+		<module>Common Utils</module>
 		<module>Homework 1</module>
 		<module>Homework 2</module>
-		<module>Common Utils</module>
 		<module>Homework 3</module>
+		<module>Homework 4</module>
 	</modules>
 
 	<packaging>pom</packaging>

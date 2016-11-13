@@ -39,6 +39,7 @@ public class Main {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     private static void constructDataSet() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_NAME));
 
